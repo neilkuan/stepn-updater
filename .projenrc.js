@@ -10,6 +10,15 @@ const project = new awscdk.AwsCdkTypeScriptApp({
     '@types/got',
     'coingecko-api-v3',
   ],
-  gitignore: ['venv'],
+  gitignore: ['venv', 'cdk.out'],
+  depsUpgradeOptions: {
+    workflowOptions: {
+      labels: ['auto-approve'],
+    },
+  },
+  autoApproveOptions: {
+    secret: 'GITHUB_TOKEN',
+    allowedUsernames: ['neilkuan'],
+  },
 });
 project.synth();
