@@ -54,27 +54,6 @@ export async function CoinGeckoApi(ids: string) {
   return { usd: price_usd[ids].usd, twd: price_twd[ids].twd };
 }
 
-export async function scanUser(table: string) {
-  const dynamoDB = new DynamoDB({ apiVersion: '2017-10-17' });
-  const data = await dynamoDB.scan({
-    TableName: table,
-    AttributesToGet: ['chat_id'],
-    Select: 'SPECIFIC_ATTRIBUTES',
-    ScanFilter: {
-      enable: {
-        AttributeValueList: [
-          {
-            BOOL: true,
-          },
-        ],
-        ComparisonOperator: 'EQ',
-      },
-    },
-  }).promise();
-  return data;
-}
-
-
 export async function addUser(table: string, user: User) {
   const dynamoDB = new DynamoDB({ apiVersion: '2017-10-17' });
   const data = await dynamoDB.scan({
@@ -174,6 +153,7 @@ export async function handler(event: any): Promise<OnEventResponse> {
   let chat_name = '';
   let text = '';
   let source = '';
+  var item;
   var jsonBodyEvent;
   try {
     jsonBodyEvent = JSON.parse(event.body);
@@ -189,6 +169,7 @@ export async function handler(event: any): Promise<OnEventResponse> {
   }
   try {
     source = event.source;
+    item = event.CronJob
   } catch (error) {
   }
 
@@ -207,11 +188,10 @@ export async function handler(event: any): Promise<OnEventResponse> {
       const res = await removeUser(table, { chat_id, chat_name, enable: true });
       await sendMessage(chat_id, res);
       return { status: '200' };
-    } else if (source === 'aws.events') {
+    } else if (source === 'aws.statemachine') {
       console.log('events notify');
       const GST_BSC = await CoinGeckoApi(CoinGeckoClientIds.GST_BSC);
       const GST_SOL = await CoinGeckoApi(CoinGeckoClientIds.GST_SOL);
-      const user = await scanUser('stepn-notify-user');
       const price = `
 BSC Token Now Price
 GST_BSC: USD: ${JSON.stringify(GST_BSC.usd) } TWD: ${JSON.stringify(GST_BSC.twd) }
@@ -219,20 +199,13 @@ GST_SOL: USD: ${JSON.stringify(GST_SOL.usd) } TWD: ${JSON.stringify(GST_SOL.twd)
 Times: ${JSON.stringify(Number(GST_BSC.usd) / Number(GST_SOL.usd))}
 `;
       console.log(price);
-      console.log(user.Count);
-      console.log(user.Count === 1);
-      if (user.Count! >= 1) {
-        try {
-          console.log('start to send message...');
-          user.Items?.forEach(async (i) => {
-            console.log('items: ', i.chat_id.S!);
-            await sendMessage(i.chat_id.S!, price);
-            console.log(`finsh to send message to ${i.chat_id.S!}...`);
-          });
-
-        } catch (error) {
-          console.error(error);
-        }
+      try {
+        console.log('start to send message...');
+        console.log('items: ', item.chat_id.S);
+        await sendMessage(item.chat_id.S, price);
+        console.log(`finsh to send message to ${item.chat_id.S}...`);
+      } catch (error) {
+        console.error(error);
       }
 
       return { status: '200' };

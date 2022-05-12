@@ -1,7 +1,9 @@
 import { App, Stack, StackProps, CfnOutput, Duration, RemovalPolicy } from 'aws-cdk-lib';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as events from 'aws-cdk-lib/aws-events';
-import * as eventsTargets from 'aws-cdk-lib/aws-events-targets';
+import * as targets from 'aws-cdk-lib/aws-events-targets';
+import * as stepfunctions from 'aws-cdk-lib/aws-stepfunctions';
+import * as sftasks from 'aws-cdk-lib/aws-stepfunctions-tasks';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as logs from 'aws-cdk-lib/aws-logs';
 import { Construct } from 'constructs';
@@ -37,10 +39,46 @@ export class MyStack extends Stack {
       value: `${url.url}`,
     });
 
-    const schedule = events.Schedule.rate(Duration.minutes(2));
-    new events.Rule(this, 'scheduleRule', {
-      schedule,
-      targets: [new eventsTargets.LambdaFunction(fn)],
+    // use step function to async invoke lambda.
+    const scanTable = new sftasks.CallAwsService(this, 'ScanTable', {
+      service: 'dynamodb',
+      action: 'scan',
+      parameters: {
+        TableName: table.tableName,
+      },
+      iamResources: [table.tableArn],
+      timeout: Duration.seconds(10),
+      resultSelector: {
+        'inputForMap.$': '$.Items'
+      },
+    });
+
+    const mapItems = new stepfunctions.Map(this, 'mapItems', {
+      maxConcurrency: 100,
+      itemsPath: '$.inputForMap',
+    });
+
+    mapItems.iterator(new sftasks.LambdaInvoke(this, 'Notify', {
+      payload: {
+        type: stepfunctions.InputType.OBJECT,
+        value: {
+          'source': 'aws.statemachine', 
+          'CronJob.$': '$' 
+        },
+      },
+      lambdaFunction: fn,
+    }));
+
+    const definition = stepfunctions.Chain.start(scanTable)
+      .next(mapItems);
+
+    const machine = new stepfunctions.StateMachine(this, 'StateMachine', {
+      definition,
+    });
+
+    new events.Rule(this, 'ScheduleRule', {
+      schedule: events.Schedule.rate(Duration.minutes(2)),
+      targets: [new targets.SfnStateMachine(machine)],
     });
   }
 }
