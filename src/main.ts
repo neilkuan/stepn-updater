@@ -49,13 +49,19 @@ export class MyStack extends Stack {
       iamResources: [table.tableArn],
       timeout: Duration.seconds(10),
       resultSelector: {
+        'count.$': '$.Count',
         'inputForMap.$': '$.Items'
       },
     });
 
+    const choice = new stepfunctions.Choice(this, 'Need to send message?!', {
+      inputPath: '$',
+      outputPath: '$.inputForMap',
+    });
+
     const mapItems = new stepfunctions.Map(this, 'mapItems', {
       maxConcurrency: 100,
-      itemsPath: '$.inputForMap',
+      itemsPath: '$',
     });
 
     mapItems.iterator(new sftasks.LambdaInvoke(this, 'Notify', {
@@ -69,8 +75,11 @@ export class MyStack extends Stack {
       lambdaFunction: fn,
     }));
 
+    choice.when(stepfunctions.Condition.numberLessThan('$.count', 1), new stepfunctions.Succeed(this, 'Not need send message, Done'))
+      .when(stepfunctions.Condition.numberGreaterThanEquals('$.count', 1), mapItems);
+
     const definition = stepfunctions.Chain.start(scanTable)
-      .next(mapItems);
+      .next(choice);
 
     const machine = new stepfunctions.StateMachine(this, 'StateMachine', {
       definition,
