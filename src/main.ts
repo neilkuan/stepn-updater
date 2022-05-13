@@ -2,10 +2,10 @@ import { App, Stack, StackProps, CfnOutput, Duration, RemovalPolicy } from 'aws-
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as events from 'aws-cdk-lib/aws-events';
 import * as targets from 'aws-cdk-lib/aws-events-targets';
-import * as stepfunctions from 'aws-cdk-lib/aws-stepfunctions';
-import * as sftasks from 'aws-cdk-lib/aws-stepfunctions-tasks';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as logs from 'aws-cdk-lib/aws-logs';
+import * as stepfunctions from 'aws-cdk-lib/aws-stepfunctions';
+import * as sftasks from 'aws-cdk-lib/aws-stepfunctions-tasks';
 import { Construct } from 'constructs';
 import { TelegrambotFunction } from './telegrambot-function';
 export class MyStack extends Stack {
@@ -50,7 +50,7 @@ export class MyStack extends Stack {
       timeout: Duration.seconds(10),
       resultSelector: {
         'count.$': '$.Count',
-        'inputForMap.$': '$.Items'
+        'inputForMap.$': '$.Items',
       },
     });
 
@@ -68,8 +68,8 @@ export class MyStack extends Stack {
       payload: {
         type: stepfunctions.InputType.OBJECT,
         value: {
-          'source': 'aws.statemachine', 
-          'CronJob.$': '$' 
+          'source': 'aws.statemachine',
+          'CronJob.$': '$',
         },
       },
       lambdaFunction: fn,
