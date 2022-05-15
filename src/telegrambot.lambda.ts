@@ -169,7 +169,7 @@ export async function handler(event: any): Promise<OnEventResponse> {
   }
   try {
     source = event.source;
-    item = event.CronJob
+    item = event.CronJob;
   } catch (error) {
   }
 
