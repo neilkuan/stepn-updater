@@ -23,5 +23,6 @@ const project = new awscdk.AwsCdkTypeScriptApp({
     secret: 'PROJEN_GITHUB_TOKEN',
     allowedUsernames: ['auto-machine', 'neilkuan'],
   },
+  typescriptVersion: '4.6',
 });
 project.synth();
