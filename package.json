@@ -34,7 +34,7 @@
     "aws-cdk": "^2.23.0",
     "aws-sdk": "^2.1318.0",
     "coingecko-api-v3": "^0.0.20",
-    "esbuild": "^0.17.8",
+    "esbuild": "^0.17.9",
     "eslint": "^8",
     "eslint-import-resolver-node": "^0.3.7",
     "eslint-import-resolver-typescript": "^2.7.1",
