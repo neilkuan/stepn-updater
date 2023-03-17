@@ -32,7 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "aws-cdk": "^2.23.0",
-    "aws-sdk": "^2.1336.0",
+    "aws-sdk": "^2.1337.0",
     "coingecko-api-v3": "^0.0.22",
     "esbuild": "^0.17.11",
     "eslint": "^8",
