@@ -3,8 +3,10 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   cdkVersion: '2.23.0',
   defaultReleaseBranch: 'main',
   name: 'stepn-updater',
+  deps: [
+    'got@^12.6.0',
+  ],
   devDeps: [
-    'got',
     'aws-sdk',
     'esbuild',
     '@types/got',

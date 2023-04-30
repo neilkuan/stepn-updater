@@ -47,7 +47,7 @@ export class MyStack extends Stack {
         TableName: table.tableName,
       },
       iamResources: [table.tableArn],
-      timeout: Duration.seconds(10),
+      taskTimeout: stepfunctions.Timeout.duration(Duration.seconds(10)),
       resultSelector: {
         'count.$': '$.Count',
         'inputForMap.$': '$.Items',
