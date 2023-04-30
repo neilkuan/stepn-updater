@@ -58,10 +58,6 @@
       "type": "build"
     },
     {
-      "name": "got",
-      "type": "build"
-    },
-    {
       "name": "jest",
       "type": "build"
     },
@@ -100,6 +96,11 @@
     {
       "name": "constructs",
       "version": "^10.0.5",
+      "type": "runtime"
+    },
+    {
+      "name": "got",
+      "version": "^12.6.0",
       "type": "runtime"
     }
   ],
