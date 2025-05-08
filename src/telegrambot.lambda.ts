@@ -6,7 +6,7 @@ const apiKey = process.env.API_KEY;
 
 enum CoinGeckoClientIds {
   GST_SOL ='green-satoshi-token',
-  GST_BSC ='green-satoshi-token-bsc'
+  GST_BSC ='green-satoshi-token-bsc',
 }
 
 interface OnEventResponse {
