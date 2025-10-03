@@ -38,7 +38,7 @@
       "description": "Create a JavaScript bundle from src/telegrambot.lambda.ts",
       "steps": [
         {
-          "exec": "esbuild --bundle src/telegrambot.lambda.ts --target=\"node18\" --platform=\"node\" --outfile=\"assets/telegrambot.lambda/index.js\" --tsconfig=\"tsconfig.dev.json\" --external:@aws-sdk/*"
+          "exec": "esbuild --bundle src/telegrambot.lambda.ts --target=\"node22\" --platform=\"node\" --outfile=\"assets/telegrambot.lambda/index.js\" --tsconfig=\"tsconfig.dev.json\" --external:@aws-sdk/*"
         }
       ]
     },
@@ -47,7 +47,7 @@
       "description": "Continuously update the JavaScript bundle from src/telegrambot.lambda.ts",
       "steps": [
         {
-          "exec": "esbuild --bundle src/telegrambot.lambda.ts --target=\"node18\" --platform=\"node\" --outfile=\"assets/telegrambot.lambda/index.js\" --tsconfig=\"tsconfig.dev.json\" --external:@aws-sdk/* --watch"
+          "exec": "esbuild --bundle src/telegrambot.lambda.ts --target=\"node22\" --platform=\"node\" --outfile=\"assets/telegrambot.lambda/index.js\" --tsconfig=\"tsconfig.dev.json\" --external:@aws-sdk/* --watch"
         }
       ]
     },
