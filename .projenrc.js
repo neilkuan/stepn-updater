@@ -27,4 +27,5 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   },
   typescriptVersion: '4.6',
 });
+project.eslint.allowDefaultProjectFiles('.projenrc.js');
 project.synth();
