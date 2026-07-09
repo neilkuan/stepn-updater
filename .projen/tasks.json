@@ -261,13 +261,47 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/got,@types/jest,aws-sdk,coingecko-api-v3,esbuild,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,ts-node"
+          "execArgs": [
+            "npx",
+            "npm-check-updates@20",
+            "--upgrade",
+            "--target=minor",
+            "--peer",
+            "--no-deprecated",
+            "--dep=dev,prod,peer,optional",
+            "--filter=@types/got,@types/jest,aws-sdk,coingecko-api-v3,esbuild,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,ts-node"
+          ]
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @stylistic/eslint-plugin @types/got @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser aws-cdk aws-sdk coingecko-api-v3 esbuild eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit projen ts-jest ts-node typescript aws-cdk-lib constructs got"
+          "execArgs": [
+            "yarn",
+            "upgrade",
+            "@stylistic/eslint-plugin",
+            "@types/got",
+            "@types/jest",
+            "@types/node",
+            "@typescript-eslint/eslint-plugin",
+            "@typescript-eslint/parser",
+            "aws-cdk",
+            "aws-sdk",
+            "coingecko-api-v3",
+            "esbuild",
+            "eslint-import-resolver-typescript",
+            "eslint-plugin-import",
+            "eslint",
+            "jest",
+            "jest-junit",
+            "projen",
+            "ts-jest",
+            "ts-node",
+            "typescript",
+            "aws-cdk-lib",
+            "constructs",
+            "got"
+          ]
         },
         {
           "exec": "npx projen"
