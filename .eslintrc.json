@@ -157,7 +157,8 @@
         "devDependencies": [
           "**/test/**",
           "**/build-tools/**",
-          "src/telegrambot.lambda.ts"
+          "src/telegrambot.lambda.ts",
+          ".projenrc.js"
         ],
         "optionalDependencies": false,
         "peerDependencies": true
