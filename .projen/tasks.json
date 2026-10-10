@@ -49,6 +49,7 @@
             "--target=node22",
             "--platform=node",
             "--outfile=assets/telegrambot.lambda/index.js",
+            "--packages=bundle",
             "--tsconfig=test/tsconfig.json",
             "--external:@aws-sdk/*"
           ]
@@ -67,6 +68,7 @@
             "--target=node22",
             "--platform=node",
             "--outfile=assets/telegrambot.lambda/index.js",
+            "--packages=bundle",
             "--tsconfig=test/tsconfig.json",
             "--external:@aws-sdk/*",
             "--watch"
