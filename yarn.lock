@@ -2587,9 +2587,9 @@ http-proxy-agent@^4.0.1:
     debug "4"
 
 http2-wrapper@^2.1.10:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/http2-wrapper/-/http2-wrapper-2.2.2.tgz#18151a59a4b2be9bce22048aa19c63b8370f3b14"
-  integrity sha512-rwd+LcfKZAo4u1B3FABGKqOiBTnyunawZkaNqqZfOCK3JAaQVZdBYtm61a84X46uf+AeCIcaOLM05E4PgHtr+w==
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/http2-wrapper/-/http2-wrapper-2.2.4.tgz#6aee653365fe19051e970cc466e179929d43cef0"
+  integrity sha512-y5jx4isTOKEC5Hu1lswc+IxytGlqDmwF1qJtk9qIS8l1KVxuHO5g522UfmErt1H2pMcH/xq+KiFQUB8aVWIABA==
   dependencies:
     quick-lru "^5.1.1"
     resolve-alpn "^1.2.0"
