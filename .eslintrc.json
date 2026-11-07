@@ -45,6 +45,7 @@
     "node_modules/",
     "*.generated.ts",
     "coverage",
+    "src/telegrambot-function.ts",
     "!.projenrc.js"
   ],
   "rules": {
